@@ -44,8 +44,10 @@ namespace :git do
   desc 'Update the repo mirror to reflect the origin state'
   task update: :'git:clone' do
     on roles :all do
-      within repo_path do
-        execute :git, :remote, :update
+      with fetch(:git_environmental_variables) do
+        within repo_path do
+          execute :git, :remote, :update
+        end
       end
     end
   end
